@@ -451,7 +451,14 @@ void DaDuDa::on_checkBTN_clicked()
     arg << "-p";
     arg << "m8";
     arg << "-P";
+
+#ifdef Q_OS_LINUX
+    QString tmp = "/dev/" + ui->portCB->currentText();
+    arg << tmp;
+#else
     arg << ui->portCB->currentText();
+#endif
+
 
     if(ui->baudTB->text() != "")
     {
@@ -490,7 +497,12 @@ void DaDuDa::on_fReadBTN_clicked()
     arg << "-p";
     arg << devices[ui->deviceCB->currentText()].at(0);
     arg << "-P";
+#ifdef Q_OS_LINUX
+    QString tmp = "/dev/" + ui->portCB->currentText();
+    arg << tmp;
+#else
     arg << ui->portCB->currentText();
+#endif
 
     if(ui->baudTB->text() != "")
     {
@@ -532,7 +544,12 @@ void DaDuDa::on_eeReadBTN_clicked()
     arg << "-p";
     arg << devices[ui->deviceCB->currentText()].at(0);
     arg << "-P";
+#ifdef Q_OS_LINUX
+    QString tmp = "/dev/" + ui->portCB->currentText();
+    arg << tmp;
+#else
     arg << ui->portCB->currentText();
+#endif
 
     if(ui->baudTB->text() != "")
     {
@@ -582,7 +599,12 @@ void DaDuDa::on_fWriteBTN_clicked()
     arg << "-p";
     arg << devices[ui->deviceCB->currentText()].at(0);
     arg << "-P";
+#ifdef Q_OS_LINUX
+    QString tmp = "/dev/" + ui->portCB->currentText();
+    arg << tmp;
+#else
     arg << ui->portCB->currentText();
+#endif
 
     if(ui->baudTB->text() != "")
     {
@@ -632,7 +654,12 @@ void DaDuDa::on_eeWriteBTN_clicked()
     arg << "-p";
     arg << devices[ui->deviceCB->currentText()].at(0);
     arg << "-P";
+#ifdef Q_OS_LINUX
+    QString tmp = "/dev/" + ui->portCB->currentText();
+    arg << tmp;
+#else
     arg << ui->portCB->currentText();
+#endif
 
     if(ui->baudTB->text() != "")
     {
@@ -680,7 +707,12 @@ void DaDuDa::on_fVerifyBTN_clicked()
     arg << "-p";
     arg << devices[ui->deviceCB->currentText()].at(0);
     arg << "-P";
+#ifdef Q_OS_LINUX
+    QString tmp = "/dev/" + ui->portCB->currentText();
+    arg << tmp;
+#else
     arg << ui->portCB->currentText();
+#endif
 
     if(ui->baudTB->text() != "")
     {
@@ -728,7 +760,12 @@ void DaDuDa::on_eeVerifyBTN_clicked()
     arg << "-p";
     arg << devices[ui->deviceCB->currentText()].at(0);
     arg << "-P";
+#ifdef Q_OS_LINUX
+    QString tmp = "/dev/" + ui->portCB->currentText();
+    arg << tmp;
+#else
     arg << ui->portCB->currentText();
+#endif
 
     if(ui->baudTB->text() != "")
     {
@@ -767,7 +804,12 @@ void DaDuDa::on_eraseBTN_clicked()
     arg << "-p";
     arg << devices[ui->deviceCB->currentText()].at(0);
     arg << "-P";
+#ifdef Q_OS_LINUX
+    QString tmp = "/dev/" + ui->portCB->currentText();
+    arg << tmp;
+#else
     arg << ui->portCB->currentText();
+#endif
 
     if(ui->baudTB->text() != "")
     {
@@ -808,7 +850,12 @@ void DaDuDa::on_rLockBTN_clicked()
     arg << "-p";
     arg << devices[ui->deviceCB->currentText()].at(0);
     arg << "-P";
+#ifdef Q_OS_LINUX
+    QString tmp = "/dev/" + ui->portCB->currentText();
+    arg << tmp;
+#else
     arg << ui->portCB->currentText();
+#endif
 
     if(ui->baudTB->text() != "")
     {
@@ -846,7 +893,12 @@ void DaDuDa::on_wLockBTN_clicked()
     arg << "-p";
     arg << devices[ui->deviceCB->currentText()].at(0);
     arg << "-P";
+#ifdef Q_OS_LINUX
+    QString tmp = "/dev/" + ui->portCB->currentText();
+    arg << tmp;
+#else
     arg << ui->portCB->currentText();
+#endif
 
     if(ui->baudTB->text() != "")
     {
@@ -885,7 +937,12 @@ void DaDuDa::on_rFuseBTN_clicked()
     arg << "-p";
     arg << devices[ui->deviceCB->currentText()].at(0);
     arg << "-P";
+#ifdef Q_OS_LINUX
+    QString tmp = "/dev/" + ui->portCB->currentText();
+    arg << tmp;
+#else
     arg << ui->portCB->currentText();
+#endif
 
     if(ui->baudTB->text() != "")
     {
@@ -939,7 +996,12 @@ void DaDuDa::on_wFuseBTN_clicked(bool checked)
     arg << "-p";
     arg << devices[ui->deviceCB->currentText()].at(0);
     arg << "-P";
+#ifdef Q_OS_LINUX
+    QString tmp = "/dev/" + ui->portCB->currentText();
+    arg << tmp;
+#else
     arg << ui->portCB->currentText();
+#endif
 
     if(ui->baudTB->text() != "")
     {
