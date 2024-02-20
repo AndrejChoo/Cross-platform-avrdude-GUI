@@ -459,6 +459,10 @@ void DaDuDa::set_shareArgs(QStringList &sarg)
     }
     sarg << "-B";
     sarg << sck_rate[ui->sckCB->currentText()];
+
+    if(ui->noCheckSignCHB->isChecked()) sarg << "-F";
+    if(ui->noVerifyCHB->isChecked()) sarg << "-V";
+    if(ui->disErrCHB->isChecked()) sarg << "-D";
 }
 
 //Проверка наличия программатора и чипа
