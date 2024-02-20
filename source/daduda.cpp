@@ -71,7 +71,7 @@ DaDuDa::DaDuDa(QWidget *parent)
     devices["ATmega1284"] << "m1284" << "EF" << "C9" << "FF";
     devices["ATmega1284P"] << "m1284p" << "EF" << "C9" << "FF";
     devices["ATmega128A"] << "m128a" << "EF" << "C9" << "FF";
-    devices["ATmega16"] << "m1280" << "EF" << "C9" << "none";
+    devices["ATmega16"] << "m16" << "EF" << "C9" << "none";
     devices["ATmega1608"] << "m1608" << "none" << "none" << "none";
     devices["ATmega1609"] << "m1608" << "none" << "none" << "none";
     devices["ATmega161"] << "m161" << "EF" << "none" << "none";
