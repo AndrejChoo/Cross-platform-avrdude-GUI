@@ -448,7 +448,7 @@ void DaDuDa::set_shareArgs(QStringList &sarg)
     sarg << "-c";
     sarg << ui->programmerCB->currentText();
     sarg << "-p";
-    sarg << "m8";
+    sarg << devices[ui->deviceCB->currentText()].at(0);
     sarg << "-P";
     sarg << ui->portCB->currentText();
 
