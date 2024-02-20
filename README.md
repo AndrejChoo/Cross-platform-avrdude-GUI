@@ -1,2 +1,2 @@
-# -ross-platform-avrdude-GUI
+# Cross-platform-avrdude-GUI
 Простая кроссплатформенная графическая оболочка для avrdude, написанная на Qt.
