@@ -30,7 +30,11 @@ DaDuDa::DaDuDa(QWidget *parent)
     ui->portCB->addItem("usb");
     foreach (const QSerialPortInfo &serialPortInfo, QSerialPortInfo::availablePorts())
     {
+ #ifdef Q_OS_LINUX
+        ui->portCB->addItem("/dev/" + serialPortInfo.portName());
+ #else
         ui->portCB->addItem(serialPortInfo.portName());
+ #endif
     }
 
     connect( proc, SIGNAL(readyReadStandardOutput()), this, SLOT(readFromStdout()) );
@@ -439,6 +443,24 @@ void DaDuDa::on_eeOpenBTN_clicked()
     ui->eePathTB->setText(eePath);
 }
 
+void DaDuDa::set_shareArgs(QStringList &sarg)
+{
+    sarg << "-c";
+    sarg << ui->programmerCB->currentText();
+    sarg << "-p";
+    sarg << "m8";
+    sarg << "-P";
+    sarg << ui->portCB->currentText();
+
+    if(ui->baudTB->text() != "")
+    {
+        sarg << "-b";
+        sarg << ui->baudTB->text();
+    }
+    sarg << "-B";
+    sarg << sck_rate[ui->sckCB->currentText()];
+}
+
 //Проверка наличия программатора и чипа
 void DaDuDa::on_checkBTN_clicked()
 {
@@ -446,27 +468,7 @@ void DaDuDa::on_checkBTN_clicked()
 
     QStringList arg;
 
-    arg << "-c";
-    arg << ui->programmerCB->currentText();
-    arg << "-p";
-    arg << "m8";
-    arg << "-P";
-
-#ifdef Q_OS_LINUX
-    QString tmp = "/dev/" + ui->portCB->currentText();
-    arg << tmp;
-#else
-    arg << ui->portCB->currentText();
-#endif
-
-
-    if(ui->baudTB->text() != "")
-    {
-        arg << "-b";
-        arg << ui->baudTB->text();
-    }
-    arg << "-B";
-    arg << sck_rate[ui->sckCB->currentText()];
+    set_shareArgs(arg);
 
     mainStr = "avrdude ";
     for(const auto& i : arg )
@@ -492,25 +494,8 @@ void DaDuDa::on_fReadBTN_clicked()
 
     QStringList arg;
 
-    arg << "-c";
-    arg << ui->programmerCB->currentText();
-    arg << "-p";
-    arg << devices[ui->deviceCB->currentText()].at(0);
-    arg << "-P";
-#ifdef Q_OS_LINUX
-    QString tmp = "/dev/" + ui->portCB->currentText();
-    arg << tmp;
-#else
-    arg << ui->portCB->currentText();
-#endif
+    set_shareArgs(arg);
 
-    if(ui->baudTB->text() != "")
-    {
-        arg << "-b";
-        arg << ui->baudTB->text();
-    }
-    arg << "-B";
-    arg << sck_rate[ui->sckCB->currentText()];
     arg << "-U";
     arg << mainStr;
 
@@ -539,25 +524,8 @@ void DaDuDa::on_eeReadBTN_clicked()
 
     QStringList arg;
 
-    arg << "-c";
-    arg << ui->programmerCB->currentText();
-    arg << "-p";
-    arg << devices[ui->deviceCB->currentText()].at(0);
-    arg << "-P";
-#ifdef Q_OS_LINUX
-    QString tmp = "/dev/" + ui->portCB->currentText();
-    arg << tmp;
-#else
-    arg << ui->portCB->currentText();
-#endif
+    set_shareArgs(arg);
 
-    if(ui->baudTB->text() != "")
-    {
-        arg << "-b";
-        arg << ui->baudTB->text();
-    }
-    arg << "-B";
-    arg << sck_rate[ui->sckCB->currentText()];
     arg << "-U";
     arg << mainStr;
 
@@ -594,25 +562,8 @@ void DaDuDa::on_fWriteBTN_clicked()
 
     QStringList arg;
 
-    arg << "-c";
-    arg << ui->programmerCB->currentText();
-    arg << "-p";
-    arg << devices[ui->deviceCB->currentText()].at(0);
-    arg << "-P";
-#ifdef Q_OS_LINUX
-    QString tmp = "/dev/" + ui->portCB->currentText();
-    arg << tmp;
-#else
-    arg << ui->portCB->currentText();
-#endif
+    set_shareArgs(arg);
 
-    if(ui->baudTB->text() != "")
-    {
-        arg << "-b";
-        arg << ui->baudTB->text();
-    }
-    arg << "-B";
-    arg << sck_rate[ui->sckCB->currentText()];
     arg << "-U";
     arg << mainStr;
 
@@ -649,25 +600,8 @@ void DaDuDa::on_eeWriteBTN_clicked()
 
     QStringList arg;
 
-    arg << "-c";
-    arg << ui->programmerCB->currentText();
-    arg << "-p";
-    arg << devices[ui->deviceCB->currentText()].at(0);
-    arg << "-P";
-#ifdef Q_OS_LINUX
-    QString tmp = "/dev/" + ui->portCB->currentText();
-    arg << tmp;
-#else
-    arg << ui->portCB->currentText();
-#endif
+    set_shareArgs(arg);
 
-    if(ui->baudTB->text() != "")
-    {
-        arg << "-b";
-        arg << ui->baudTB->text();
-    }
-    arg << "-B";
-    arg << sck_rate[ui->sckCB->currentText()];
     arg << "-U";
     arg << mainStr;
 
@@ -702,25 +636,8 @@ void DaDuDa::on_fVerifyBTN_clicked()
 
     QStringList arg;
 
-    arg << "-c";
-    arg << ui->programmerCB->currentText();
-    arg << "-p";
-    arg << devices[ui->deviceCB->currentText()].at(0);
-    arg << "-P";
-#ifdef Q_OS_LINUX
-    QString tmp = "/dev/" + ui->portCB->currentText();
-    arg << tmp;
-#else
-    arg << ui->portCB->currentText();
-#endif
+    set_shareArgs(arg);
 
-    if(ui->baudTB->text() != "")
-    {
-        arg << "-b";
-        arg << ui->baudTB->text();
-    }
-    arg << "-B";
-    arg << sck_rate[ui->sckCB->currentText()];
     arg << "-U";
     arg << mainStr;
 
@@ -755,25 +672,8 @@ void DaDuDa::on_eeVerifyBTN_clicked()
 
     QStringList arg;
 
-    arg << "-c";
-    arg << ui->programmerCB->currentText();
-    arg << "-p";
-    arg << devices[ui->deviceCB->currentText()].at(0);
-    arg << "-P";
-#ifdef Q_OS_LINUX
-    QString tmp = "/dev/" + ui->portCB->currentText();
-    arg << tmp;
-#else
-    arg << ui->portCB->currentText();
-#endif
+    set_shareArgs(arg);
 
-    if(ui->baudTB->text() != "")
-    {
-        arg << "-b";
-        arg << ui->baudTB->text();
-    }
-    arg << "-B";
-    arg << sck_rate[ui->sckCB->currentText()];
     arg << "-U";
     arg << mainStr;
 
@@ -799,28 +699,9 @@ void DaDuDa::on_eraseBTN_clicked()
 
     QStringList arg;
 
-    arg << "-c";
-    arg << ui->programmerCB->currentText();
-    arg << "-p";
-    arg << devices[ui->deviceCB->currentText()].at(0);
-    arg << "-P";
-#ifdef Q_OS_LINUX
-    QString tmp = "/dev/" + ui->portCB->currentText();
-    arg << tmp;
-#else
-    arg << ui->portCB->currentText();
-#endif
+    set_shareArgs(arg);
 
-    if(ui->baudTB->text() != "")
-    {
-        arg << "-b";
-        arg << ui->baudTB->text();
-    }
-    arg << "-B";
-    arg << sck_rate[ui->sckCB->currentText()];
     arg << "-e";
-
-
 
     mainStr = "avrdude ";
     for(const auto& i : arg )
@@ -845,25 +726,8 @@ void DaDuDa::on_rLockBTN_clicked()
 
     QStringList arg;
 
-    arg << "-c";
-    arg << ui->programmerCB->currentText();
-    arg << "-p";
-    arg << devices[ui->deviceCB->currentText()].at(0);
-    arg << "-P";
-#ifdef Q_OS_LINUX
-    QString tmp = "/dev/" + ui->portCB->currentText();
-    arg << tmp;
-#else
-    arg << ui->portCB->currentText();
-#endif
+    set_shareArgs(arg);
 
-    if(ui->baudTB->text() != "")
-    {
-        arg << "-b";
-        arg << ui->baudTB->text();
-    }
-    arg << "-B";
-    arg << sck_rate[ui->sckCB->currentText()];
     arg << "-U";
     arg <<"lock:r:lock.txt:h";
 
@@ -888,25 +752,8 @@ void DaDuDa::on_wLockBTN_clicked()
 
     QStringList arg;
 
-    arg << "-c";
-    arg << ui->programmerCB->currentText();
-    arg << "-p";
-    arg << devices[ui->deviceCB->currentText()].at(0);
-    arg << "-P";
-#ifdef Q_OS_LINUX
-    QString tmp = "/dev/" + ui->portCB->currentText();
-    arg << tmp;
-#else
-    arg << ui->portCB->currentText();
-#endif
+    set_shareArgs(arg);
 
-    if(ui->baudTB->text() != "")
-    {
-        arg << "-b";
-        arg << ui->baudTB->text();
-    }
-    arg << "-B";
-    arg << sck_rate[ui->sckCB->currentText()];
     arg << "-U";
     QString lk = "lock:w:0x" + ui->lockTB->text() + ":m";
     arg << lk;
@@ -932,25 +779,8 @@ void DaDuDa::on_rFuseBTN_clicked()
 
     QStringList arg;
 
-    arg << "-c";
-    arg << ui->programmerCB->currentText();
-    arg << "-p";
-    arg << devices[ui->deviceCB->currentText()].at(0);
-    arg << "-P";
-#ifdef Q_OS_LINUX
-    QString tmp = "/dev/" + ui->portCB->currentText();
-    arg << tmp;
-#else
-    arg << ui->portCB->currentText();
-#endif
+    set_shareArgs(arg);
 
-    if(ui->baudTB->text() != "")
-    {
-        arg << "-b";
-        arg << ui->baudTB->text();
-    }
-    arg << "-B";
-    arg << sck_rate[ui->sckCB->currentText()];
     if(ui->eFuseTB->isEnabled())
     {
         arg << "-U";
@@ -991,25 +821,7 @@ void DaDuDa::on_wFuseBTN_clicked(bool checked)
 
     QStringList arg;
 
-    arg << "-c";
-    arg << ui->programmerCB->currentText();
-    arg << "-p";
-    arg << devices[ui->deviceCB->currentText()].at(0);
-    arg << "-P";
-#ifdef Q_OS_LINUX
-    QString tmp = "/dev/" + ui->portCB->currentText();
-    arg << tmp;
-#else
-    arg << ui->portCB->currentText();
-#endif
-
-    if(ui->baudTB->text() != "")
-    {
-        arg << "-b";
-        arg << ui->baudTB->text();
-    }
-    arg << "-B";
-    arg << sck_rate[ui->sckCB->currentText()];
+    set_shareArgs(arg);
 
     if(ui->eFuseTB->isEnabled() || ui->lFuseTB->isEnabled()  || ui->hFuseTB->isEnabled())
     {

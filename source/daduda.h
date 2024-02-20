@@ -15,7 +15,7 @@ public:
     DaDuDa(QWidget *parent = nullptr);
     ~DaDuDa();
 
-
+void set_shareArgs(QStringList &sarg);
 
 private slots:
     void on_scanBTN_clicked();
