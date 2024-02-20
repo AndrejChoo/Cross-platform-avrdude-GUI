@@ -13,7 +13,11 @@
 # Запуск программы
 Для работы программы в:
 Linux - необходимо установить avrdude
--Debian димтрибутивы: sudo apt install avrdude
+
+-Debian дистрибутивы: sudo apt install avrdude
+
 -Arch дистрибутивы: sudo pacman -S avrdude
+
 -RedHat дистрибутивы: sudo dnf install avrdude
+
 Windows - необходимо скопировать файлы "avrdude" и "avrdude.conf" в папку с программой; или в любое место, но тогда прописать путь в переменной Path.
