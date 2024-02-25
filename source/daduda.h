@@ -15,7 +15,9 @@ public:
     DaDuDa(QWidget *parent = nullptr);
     ~DaDuDa();
 
-void set_shareArgs(QStringList &sarg);
+    void set_shareArgs(QStringList &sarg);
+    void checkFuses();
+    void writeSign();
 
 private slots:
     void on_scanBTN_clicked();

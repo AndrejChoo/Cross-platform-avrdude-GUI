@@ -13,11 +13,14 @@
 //Глобальные переменные
 QString fPath, eePath;
 QString mainStr;
+QString text;
 
 QProcess *proc = new QProcess();
 
 QMap<QString, QStringList> devices;
 QMap<QString, QString> sck_rate;
+
+bool checkSign = false;
 
 
 DaDuDa::DaDuDa(QWidget *parent)
@@ -71,7 +74,7 @@ DaDuDa::DaDuDa(QWidget *parent)
     devices["ATmega1284"] << "m1284" << "EF" << "C9" << "FF";
     devices["ATmega1284P"] << "m1284p" << "EF" << "C9" << "FF";
     devices["ATmega128A"] << "m128a" << "EF" << "C9" << "FF";
-    devices["ATmega16"] << "m16" << "EF" << "C9" << "none";
+    devices["ATmega16"] << "m1280" << "EF" << "C9" << "none";
     devices["ATmega1608"] << "m1608" << "none" << "none" << "none";
     devices["ATmega1609"] << "m1608" << "none" << "none" << "none";
     devices["ATmega161"] << "m161" << "EF" << "none" << "none";
@@ -304,15 +307,8 @@ DaDuDa::~DaDuDa()
     delete ui;
 }
 
-
-
-void DaDuDa::readFromStdout()
+void DaDuDa::checkFuses()
 {
-    QByteArray data = proc->readAllStandardOutput();
-    QString text = QString(data);
-    ui->consoleTB->moveCursor(QTextCursor::End);
-    ui->consoleTB->insertPlainText(text);
-
     QFile file("lock.txt");
     if(file.open(QIODevice::ReadOnly))
     {
@@ -362,60 +358,49 @@ void DaDuDa::readFromStdout()
     }
 }
 
-void DaDuDa::readFromStderr()
+void DaDuDa::writeSign()
 {
-    QByteArray data = proc->readAllStandardError();
-    QString text = QString(data);
+    if(text.contains("Device signature") && checkSign)
+    {
+        int signStart = text.indexOf("Device signature") + 21;
+        ui->signLB->setText(text.mid(signStart, 6));
+
+        int modStart = text.indexOf("probably") + 9;
+        int modStop = text.lastIndexOf(")") - 1;
+        QString dev = text.mid(modStart, (modStop - (modStart - 1)));
+        foreach (QString key, devices.keys())
+        {
+            QString curKey = devices[key].at(0);
+            if(dev == curKey)
+            {
+                ui->deviceCB->setCurrentText(key);
+                return;
+            }
+        }
+        checkSign = false;
+    }
+}
+
+void DaDuDa::readFromStdout()
+{
+    QByteArray data = proc->readAllStandardOutput();
+    text = QString(data);
     ui->consoleTB->moveCursor(QTextCursor::End);
     ui->consoleTB->insertPlainText(text);
 
-    QFile file("lock.txt");
-    if(file.open(QIODevice::ReadOnly))
-    {
-        QTextStream in(&file);
-        QString line = in.readLine();
+    checkFuses();
+    writeSign();
+}
 
-        ui->lockTB->setText(line.mid(2, 2).toUpper());
+void DaDuDa::readFromStderr()
+{
+    QByteArray data = proc->readAllStandardError();
+    text = QString(data);
+    ui->consoleTB->moveCursor(QTextCursor::End);
+    ui->consoleTB->insertPlainText(text);
 
-        file.close();
-        file.remove();
-    }
-
-    QFile file1("lfuse.txt");
-    if(file1.open(QIODevice::ReadOnly))
-    {
-        QTextStream in1(&file1);
-        QString line1 = in1.readLine();
-
-        ui->lFuseTB->setText(line1.mid(2, 2).toUpper());
-
-        file1.close();
-        file1.remove();
-    }
-
-    QFile file2("hfuse.txt");
-    if(file2.open(QIODevice::ReadOnly))
-    {
-        QTextStream in2(&file2);
-        QString line2 = in2.readLine();
-
-        ui->hFuseTB->setText(line2.mid(2, 2).toUpper());
-
-        file2.close();
-        file2.remove();
-    }
-
-    QFile file3("efuse.txt");
-    if(file3.open(QIODevice::ReadOnly))
-    {
-        QTextStream in3(&file3);
-        QString line3 = in3.readLine();
-
-        ui->eFuseTB->setText(line3.mid(2, 2).toUpper());
-
-        file3.close();
-        file3.remove();
-    }
+    checkFuses();
+    writeSign();
 }
 
 //Обновление списка портов
@@ -468,6 +453,9 @@ void DaDuDa::set_shareArgs(QStringList &sarg)
 //Проверка наличия программатора и чипа
 void DaDuDa::on_checkBTN_clicked()
 {
+    checkSign = true;
+    ui->signLB->setText("");
+
     ui->consoleTB->clear();
 
     QStringList arg;
