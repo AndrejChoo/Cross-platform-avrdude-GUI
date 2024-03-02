@@ -64,6 +64,26 @@
      </item>
      <item>
       <property name="text">
+       <string>arduino</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>arduino-ft232r</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>arduinoisp</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>arduinoisporg</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>stk500</string>
       </property>
      </item>
@@ -169,6 +189,16 @@
      </item>
      <item>
       <property name="text">
+       <string>flip1</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>flip2</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>ft232h</string>
       </property>
      </item>
@@ -205,6 +235,111 @@
      <item>
       <property name="text">
        <string>jtag2avr32</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>jtag2dw</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>jtag2fast</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>jtag2isp</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>jtag2pdi</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>jtag2updi</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>jtag2fast</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>jtag3</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>jtag3dw</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>jtag3isp</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>jtag3pdi</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>jtag3updi</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>jtagkey</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>jtagmkI</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>jtagmkII</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>jtagmkII_</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>dragon_dw</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>dragon_hvsp</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>dragon_isp</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>dragon_jtag</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>dragon_pdi</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>dragon_pp</string>
       </property>
      </item>
     </widget>
