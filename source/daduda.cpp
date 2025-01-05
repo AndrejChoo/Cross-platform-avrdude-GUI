@@ -196,7 +196,7 @@ DaDuDa::DaDuDa(QWidget *parent)
     devices["ATtiny214"] << "t214" << "none" << "none" << "none";
     devices["ATtiny22"] << "t22" << "EF" << "none" << "none";
     devices["ATtiny2313"] << "t2313" << "EF" << "C9" << "FF";
-    devices["ATtiny2313A"] << "2313a" << "EF" << "C9" << "FF";
+    devices["ATtiny2313A"] << "t2313a" << "EF" << "C9" << "FF";
     devices["ATtiny24"] << "24" << "EF" << "C9" << "FF";
     devices["ATtiny24a"] << "24a" << "EF" << "C9" << "FF";
     devices["ATtiny25"] << "25" << "EF" << "C9" << "FF";
